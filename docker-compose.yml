@@ -8,24 +8,24 @@ services:
   nodeapp:
     image: rizwanzafar/nodeapp:crud_exit
     container_name: nodeapp
-    port:
+    ports:
       - '4000:4000'
     env_file:
       - ./.env
     volumes:
-      - ./:app
-      - /app/node_module
+      - ./:/app
+      - /app/node_modules
     depends_on:
       - mongo
 
   reactapp:
     image: rizwanzafar/reactapp:crud_exit
     container_name: reactapp
-    port:
+    ports:
       - '3000:3000'
     volumes:
-      - ../reactapp:app
-      - /app/node_module
+      - ../reactapp:/app
+      - /app/node_modules
     depends_on:
       - nodeapp
 
