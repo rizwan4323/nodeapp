@@ -1,0 +1,34 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - mongoData:/data/db
+
+  nodeapp:
+    image: rizwanzafar/nodeapp:crud_exit
+    container_name: nodeapp
+    port:
+      - '4000:4000'
+    env_file:
+      - ./.env
+    volumes:
+      - ./:app
+      - /app/node_module
+    depends_on:
+      - mongo
+
+  reactapp:
+    image: rizwanzafar/reactapp:crud_exit
+    container_name: reactapp
+    port:
+      - '3000:3000'
+    volumes:
+      - ../reactapp:app
+      - /app/node_module
+    depends_on:
+      - nodeapp
+
+volumes:
+  mongoData:
+
